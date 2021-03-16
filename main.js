@@ -1,9 +1,13 @@
-var heroes = Object.keys(HEROES).map(name => {
+function heroDataToObj(name) {
   return {
     name: name,
     attribute: HEROES[name].attribute,
     disabled: false
   }
+}
+
+var heroes = Object.keys(HEROES).map(name => {
+  return heroDataToObj(name)
 })
 
 Vue.component('hero-icon', {
@@ -28,7 +32,10 @@ var app = new Vue({
   el: '#app',
   data: {
     sortMethod: 'attribute',
-    heroes: heroes
+    heroes: heroes,
+    numHeroes: Object.keys(HEROES).length,
+    randomNumber: 40,
+    randomSeed: ''
   },
   methods: {
     onHeroClick: function(hero) {
@@ -36,6 +43,14 @@ var app = new Vue({
     },
     setSortMethod: function(method) {
       this.sortMethod = method
+    },
+    selectRandomSubset: function() {
+      if (this.randomSeed.length > 0) {
+        Math.seedrandom(this.randomSeed + this.randomNumber);
+      }
+      this.heroes = _.sample(Object.keys(HEROES), this.randomNumber).map(name => {
+        return heroDataToObj(name)
+      })
     }
   },
   computed: {

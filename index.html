@@ -4,6 +4,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/underscore@1.12.1/underscore-min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/seedrandom/3.0.5/seedrandom.min.js">
+</script>
   <style>
     body {
       font-family: 'Roboto', sans-serif;
@@ -69,6 +72,9 @@
       <div>
         <button class="sort-button" @click="setSortMethod('name')"> Sort by name </button>
         <button class="sort-button" @click="setSortMethod('attribute')"> Sort by attribute </button>
+        <button @click="selectRandomSubset"> Select random subset </button>
+        <input v-model="randomNumber" type="number" value="40" min="1" :max="numHeroes">
+        <input v-model="randomSeed" placeholder="Random seed">
       </div>
     </div>
     <div class="container">
