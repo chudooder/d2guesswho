@@ -49,7 +49,8 @@ var app = new Vue({
     heroes: sampleHeroes(Object.keys(HEROES).length),
     numHeroes: Object.keys(HEROES).length,
     randomNumber: 120,
-    randomSeed: ''
+    randomSeed: '',
+    hideDisabledHeroes: false
   },
   methods: {
     onHeroClick: function(hero) {
@@ -89,14 +90,21 @@ var app = new Vue({
     }
   },
   computed: {
+    visibleHeroes: function() {
+      if (this.hideDisabledHeroes) {
+        return this.heroes.filter(hero => !hero.disabled)
+      } else {
+        return this.heroes
+      }
+    },
     strHeroes: function() {
-      return this.heroes.filter(hero => hero.attribute === 'STR')
+      return this.visibleHeroes.filter(hero => hero.attribute === 'STR')
     },
     agiHeroes: function() {
-      return this.heroes.filter(hero => hero.attribute === 'AGI')
+      return this.visibleHeroes.filter(hero => hero.attribute === 'AGI')
     },
     intHeroes: function() {
-      return this.heroes.filter(hero => hero.attribute === 'INT')
+      return this.visibleHeroes.filter(hero => hero.attribute === 'INT')
     }
   }
 })

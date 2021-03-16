@@ -102,12 +102,13 @@
       <div class="row">
         <button class="sort-button" @click="setSortMethod('name')"> Sort by name </button>
         <button class="sort-button" @click="setSortMethod('attribute')"> Sort by attribute </button>
-        <button class="reset-button" @click="reset"> Reset marked heroes </button>
+        <button class="reset-button" @click="reset"> Reset eliminated heroes </button>
+        <input type="checkbox" v-model="hideDisabledHeroes"> Hide eliminated heroes </input>
       </div>
     </div>
     <div class="container">
       <div class="row" v-if="sortMethod === 'name'">
-        <hero-icon v-for="hero in heroes" :hero="hero"></hero-icon>
+        <hero-icon v-for="hero in visibleHeroes" :hero="hero"></hero-icon>
       </div>
       <div class="row" v-if="sortMethod === 'attribute'">
         <button class="reset-button" @click="eliminateAttribute('STR')"> Eliminate all STR heroes </button>
