@@ -104,10 +104,12 @@
         <button class="sort-button" @click="setSortMethod('attribute')"> Sort by attribute </button>
         <button class="reset-button" @click="reset"> Reset marked heroes </button>
       </div>
-      <div v-if="sortMethod === 'name'">
+    </div>
+    <div class="container">
+      <div class="row" v-if="sortMethod === 'name'">
         <hero-icon v-for="hero in heroes" :hero="hero"></hero-icon>
       </div>
-      <div v-if="sortMethod === 'attribute'">
+      <div class="row" v-if="sortMethod === 'attribute'">
         <button class="reset-button" @click="eliminateAttribute('STR')"> Eliminate all STR heroes </button>
         <div class="row">
           <hero-icon v-for="hero in strHeroes" :hero="hero"></hero-icon>
