@@ -1,0 +1,94 @@
+<html>
+<head>
+  <title> Dota 2 Guess Who </title>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+    }
+
+    .container {
+      margin: auto;
+      width: 1000px;
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .sort-button {
+      display: inline-block;
+      height: 100;
+    }
+
+    .hero-icon {
+      position: relative;
+      display: inline-block;
+      border: 10px;
+      margin: 5px;
+      text-align: center;
+    }
+
+    .disabled-icon {
+      color: red;
+      position: absolute;
+      z-index: 1;
+      width: 120px;
+      bottom: 20px;
+      font-size: 32pt;
+    }
+
+    .hero-name {
+      color: white;
+      font-size: 10pt;
+    }
+
+    .str {
+      background-color: #ED3A01;
+    }
+
+    .agi {
+      background-color: #167C13;
+    }
+
+    .int {
+      background-color: #257DAE;
+    }
+
+    .grayscale {
+      -webkit-filter: grayscale(100%);
+      filter: grayscale(100%);
+      background-color: black;
+    }
+
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div class="container">
+      <div>
+        <button class="sort-button" @click="setSortMethod('name')"> Sort by name </button>
+        <button class="sort-button" @click="setSortMethod('attribute')"> Sort by attribute </button>
+      </div>
+    </div>
+    <div class="container">
+      <div v-if="sortMethod === 'name'">
+        <hero-icon v-for="hero in heroes" :hero="hero"></hero-icon>
+      </div>
+      <div v-if="sortMethod === 'attribute'">
+        <div>
+          <hero-icon v-for="hero in strHeroes" :hero="hero"></hero-icon>
+        </div>
+        <div>
+          <hero-icon v-for="hero in agiHeroes" :hero="hero"></hero-icon>
+        </div>
+        <div>
+          <hero-icon v-for="hero in intHeroes" :hero="hero"></hero-icon>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="heroes.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
