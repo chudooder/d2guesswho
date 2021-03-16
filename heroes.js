@@ -306,7 +306,7 @@ HEROES = {
     'attribute': 'STR'
   },
   'Treant_Protector': {
-    'attribute': 'INT'
+    'attribute': 'STR'
   },
   'Troll_Warlord': {
     'attribute': 'AGI'
