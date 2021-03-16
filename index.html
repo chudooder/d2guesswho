@@ -12,24 +12,37 @@
       font-family: 'Roboto', sans-serif;
     }
 
+    label {
+      margin-left: 1em;
+      margin-right: 1em;
+      font-size: 10pt;
+    }
+
     .container {
-      margin: auto;
-      width: 1000px;
+      margin: 10px auto;
+      max-width: 1000px;
       display: flex;
       flex-wrap: wrap;
     }
 
+    .row {
+      display: block;
+      margin-bottom: 20px;
+    }
+
     .sort-button {
       display: inline-block;
-      height: 100;
+    }
+
+    .reset-button {
+      display: inline-block;
+      background-color: #ff5555;
     }
 
     .hero-icon {
       position: relative;
       display: inline-block;
-      border: 10px;
       margin: 5px;
-      text-align: center;
     }
 
     .disabled-icon {
@@ -39,6 +52,7 @@
       width: 120px;
       bottom: 20px;
       font-size: 32pt;
+      user-select: none;
     }
 
     .hero-name {
@@ -64,37 +78,59 @@
       background-color: black;
     }
 
+    .text-center {
+      text-align: center;
+    }
+
   </style>
 </head>
 <body>
   <div id="app">
     <div class="container">
-      <div>
-        <button class="sort-button" @click="setSortMethod('name')"> Sort by name </button>
-        <button class="sort-button" @click="setSortMethod('attribute')"> Sort by attribute </button>
-        <button @click="selectRandomSubset"> Select random subset </button>
-        <input v-model="randomNumber" type="number" value="40" min="1" :max="numHeroes">
-        <input v-model="randomSeed" placeholder="Random seed">
-      </div>
+      <h1> Dota 2 Guess Who </h1>
+      <small> Pick a hero and challenge a friend to a friendly guessing game! Take turns asking each other yes-or-no questions, and narrow down what hero they're thinking of. You can click on the icons to help mark off heroes you've eliminated. If you want to play with a smaller subset of heroes, you can share a random seed and total number with them to get the same set of heroes. Feel free to add restrictions on what questions you can ask to keep things spicy.</small>
     </div>
     <div class="container">
+      <button @click="generateRandomSeed"> Random seed </button>
+      <input v-model="randomSeed" placeholder="Random seed" @change="selectHeroes">
+      <label> Number of heroes: </label>
+      <input v-model="randomNumber" type="number" value="40" min="1" :max="numHeroes" @change="selectHeroes">
+      <button @click="useDefaults"> Use all heroes </button>
+    </div>
+    <hr/>
+    <div class="container">
+      <div class="row">
+        <button class="sort-button" @click="setSortMethod('name')"> Sort by name </button>
+        <button class="sort-button" @click="setSortMethod('attribute')"> Sort by attribute </button>
+        <button class="reset-button" @click="reset"> Reset marked heroes </button>
+      </div>
       <div v-if="sortMethod === 'name'">
         <hero-icon v-for="hero in heroes" :hero="hero"></hero-icon>
       </div>
       <div v-if="sortMethod === 'attribute'">
-        <div>
+        <button class="reset-button" @click="eliminateAttribute('STR')"> Eliminate all STR heroes </button>
+        <div class="row">
           <hero-icon v-for="hero in strHeroes" :hero="hero"></hero-icon>
         </div>
-        <div>
+        <button class="reset-button" @click="eliminateAttribute('AGI')"> Eliminate all AGI heroes </button>
+        <div class="row">
           <hero-icon v-for="hero in agiHeroes" :hero="hero"></hero-icon>
         </div>
-        <div>
+        <button class="reset-button" @click="eliminateAttribute('INT')"> Eliminate all INT heroes </button>
+        <div class="row">
           <hero-icon v-for="hero in intHeroes" :hero="hero"></hero-icon>
         </div>
       </div>
     </div>
+    <hr/>
+    <div class="text-center">
+      <a href="https://github.com/chudooder/d2guesswho">
+        <img src="img/GitHub-Mark-32px.png"/>
+      </a>
+      <span> Chudooder, 2021. </span>
+    </div>
   </div>
-  <script src="heroes.js"></script>
-  <script src="main.js"></script>
+  <script src="js/heroes.js"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>
